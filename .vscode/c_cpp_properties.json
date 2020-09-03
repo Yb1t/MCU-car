@@ -1,0 +1,31 @@
+{
+    "configurations": [
+        {
+            "name": "Win32",
+            "includePath": [
+                "${workspaceRoot}",
+                "C:/Keil_v5/C51/INC"
+            ],
+            "defines": [
+                "_DEBUG",
+                "UNICODE",
+                "sbit=char",
+                "sfr=char",
+                "bit=char",
+                "FOSC_160000",
+                "interrupt 2 ="
+            ],
+            "browse": {
+                "path": [
+                    "${workspaceRoot}"
+                ],
+                "limitSymbolsToIncludedHeaders": true,
+                "databaseFilename": ""
+            },
+            "cStandard": "c11",
+            "cppStandard": "c++17",
+            "compilerPath": "C:\\mingw64\\bin\\gcc.exe"
+        }
+    ],
+    "version": 4
+}

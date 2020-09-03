@@ -1,0 +1,13 @@
+".\Objects\main.obj",
+".\Objects\move.obj",
+".\Objects\tools.obj",
+".\Objects\pwm.obj",
+".\Objects\AI-speed.obj",
+".\Objects\digital-tube.obj",
+".\Objects\bluetooth.obj",
+".\Objects\power.obj",
+".\Objects\ultrasound.obj",
+".\Objects\oled.obj",
+".\Objects\data_init.obj" 
+TO ".\Objects\car" 
+PRINT(".\Listings\car.m51")

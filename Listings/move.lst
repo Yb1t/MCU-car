@@ -1,0 +1,152 @@
+C51 COMPILER V9.60.0.0   MOVE                                                              08/13/2020 16:51:27 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MOVE
+OBJECT MODULE PLACED IN .\Objects\move.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE move.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\move
+                    -.lst) OBJECT(.\Objects\move.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          
+   3          bit ENbz = 0;
+   4          bit ENxx = 0;
+   5          
+   6          //运动导向
+   7          //（障0无1）（黑1白0）
+   8          void route()
+   9          {
+  10   1          if (xxZ == 0 || xxY == 0)
+  11   1          {
+  12   2              //左右白（在地面）
+  13   2              EA = 1;
+  14   2              if (atoDrive)
+  15   2              {
+  16   3                  if (ENbz == 1)
+  17   3                  {
+  18   4                      //含三种有障碍的情况
+  19   4                      //左边障碍
+  20   4                      if (bzZ == 0 && bzY == 1)
+  21   4                      {
+  22   5                          right();
+  23   5                      }
+  24   4                      //右边障碍
+  25   4                      else if (bzZ == 1 && bzY == 0)
+  26   4                      {
+  27   5                          left();
+  28   5                      }
+  29   4                      //前方障碍
+  30   4                      else if (bzZ == 0 && bzY == 0)
+  31   4                      {
+  32   5                          //禁用中断(pwm)，全速进行
+  33   5                          EA = 0;        //总中断禁止
+  34   5                          ENA = ENB = 1; //左右电机允许
+  35   5                          //后退200ms
+  36   5                          back();
+  37   5                          delayms(200);
+  38   5                          //右转150ms
+  39   5                          right();
+  40   5                          delayms(150);
+  41   5                          EA = 1; //总中断允许
+  42   5                      }
+  43   4                  }
+  44   3                  //无障碍，才开始直行、巡线
+  45   3                  if (bzZ == 1 && bzY == 1)
+  46   3                  {
+  47   4                      if (ENxx == 1)
+  48   4                      {
+  49   5                          //左右白
+  50   5                          if (xxZ == 0 && xxY == 0)
+  51   5                          {
+  52   6                              forward();
+  53   6                          }
+  54   5                          //左黑
+C51 COMPILER V9.60.0.0   MOVE                                                              08/13/2020 16:51:27 PAGE 2   
+
+  55   5                          else if (xxZ == 1 && xxY == 0)
+  56   5                          {
+  57   6                              left();
+  58   6                          }
+  59   5                          //右黑
+  60   5                          else if (xxZ == 0 && xxY == 1)
+  61   5                          {
+  62   6                              right();
+  63   6                          }
+  64   5                      }
+  65   4                      else if (ENxx == 0)
+  66   4                      {
+  67   5                          forward();
+  68   5                      }
+  69   4                  }
+  70   3              }
+  71   2          }
+  72   1          //左右黑(离开地面)
+  73   1          else
+  74   1          {
+  75   2              EA = 0;
+  76   2              gearSwitch(0);
+  77   2              stop();
+  78   2          }
+  79   1      }
+  80          
+  81          //前进
+  82          void forward()
+  83          {
+  84   1          L1 = 0;
+  85   1          L2 = 1;
+  86   1          R1 = 0;
+  87   1          R2 = 1;
+  88   1      }
+  89          
+  90          //后退
+  91          void back()
+  92          {
+  93   1          L1 = 1;
+  94   1          L2 = 0;
+  95   1          R1 = 1;
+  96   1          R2 = 0;
+  97   1      }
+  98          
+  99          //左转
+ 100          void left()
+ 101          {
+ 102   1          L1 = 1;
+ 103   1          L2 = 0;
+ 104   1          R1 = 0;
+ 105   1          R2 = 1;
+ 106   1      }
+ 107          
+ 108          //右转
+ 109          void right()
+ 110          {
+ 111   1          L1 = 0;
+ 112   1          L2 = 1;
+ 113   1          R1 = 1;
+ 114   1          R2 = 0;
+ 115   1      }
+ 116          
+C51 COMPILER V9.60.0.0   MOVE                                                              08/13/2020 16:51:27 PAGE 3   
+
+ 117          //停止
+ 118          void stop()
+ 119          {
+ 120   1          L1 = 0;
+ 121   1          L2 = 0;
+ 122   1          R1 = 0;
+ 123   1          R2 = 0;
+ 124   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    168    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

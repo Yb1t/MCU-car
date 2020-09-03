@@ -1,0 +1,40 @@
+C51 COMPILER V9.60.0.0   MAIN                                                              08/13/2020 16:51:27 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
+OBJECT MODULE PLACED IN .\Objects\main.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE main.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\main
+                    -.lst) OBJECT(.\Objects\main.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          
+   3          void main()
+   4          {
+   5   1              data_init();
+   6   1          oledInit();
+   7   1              oled_show_sign();
+   8   1              boot();
+   9   1              while (1)
+  10   1              {
+  11   2                      motoControl();
+  12   2                      route();
+  13   2                      press_detect();
+*** WARNING C206 IN LINE 13 OF main.c: 'press_detect': missing function-prototype
+  14   2              }
+  15   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     23    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)

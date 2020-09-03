@@ -1,0 +1,156 @@
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         08/13/2020 16:51:28 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BLUETOOTH
+OBJECT MODULE PLACED IN .\Objects\bluetooth.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE bluetooth.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\bluetooth.lst) OBJECT(.\Objects\bluetooth.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          
+   3          uint count3 = 0;
+   4          
+   5          uint key; //蓝牙接收到的键值
+   6          
+   7          //通讯串口初始化配置（使用计数器1）
+   8          void bluetoothInit()
+   9          {
+  10   1          TMOD = 0x22; //0010 0010，两个8位自动重载
+  11   1      
+  12   1          //设置计数器1的初值，决定波特率
+  13   1          TH1 = 0xfd;
+  14   1          TL1 = 0xfd;
+  15   1      
+  16   1          ET1 = 0;     //!!!关键，T1中断（函数）禁止
+  17   1          PCON = 0x00; //波特率倍增0x00不加倍  0x80加倍
+  18   1          SCON = 0x50; //设置工作方式1 开启接受允许
+  19   1          EA = 1;      //开启总中断
+  20   1          ES = 1;      //开启串口接受、发送中断
+  21   1          TR1 = 1;     //计数器1开始运行
+  22   1      }
+  23          
+  24          //串口中断(TI发送标志位，RI接受标志位)
+  25          void UART() interrupt 4
+  26          {
+  27   1      
+  28   1          //  count3++;
+  29   1          //  if(count3==10000&&TI)
+  30   1          //  {
+  31   1          //          count3=0;
+  32   1          //          SBUF=distance;
+  33   1          //      while(!TI);
+  34   1          //          TI=0;
+  35   1          //  }
+  36   1      
+  37   1          if (RI)
+  38   1          {
+  39   2              key = SBUF;
+  40   2              switch (key)
+  41   2              {
+  42   3              case 0x00:
+  43   3                  forward();
+  44   3                  break;
+  45   3              case 0x01:
+  46   3                  back();
+  47   3                  break;
+  48   3              case 0x02:
+  49   3                  left();
+  50   3                  break;
+  51   3              case 0x03:
+  52   3                  right();
+  53   3                  break;
+  54   3              case 0x04:
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         08/13/2020 16:51:28 PAGE 2   
+
+  55   3                  stop();
+  56   3                  break;
+  57   3              case 0x05:
+  58   3                  atoDrive = 0; //进入手动驾驶
+  59   3                  oled_cover_square(STATUS3, 1, emp);
+  60   3                  stop();
+  61   3                  break;
+  62   3              case 0x06:
+  63   3                  atoDrive = 1; //进入自动驾驶
+  64   3                  oled_cover_square(STATUS3, 1, atoD);
+  65   3                  break;
+  66   3              case 0x07:
+  67   3                  gearSwitch(gear + 1);
+  68   3                  break;
+  69   3              case 0x08:
+  70   3                  gearSwitch(gear - 1);
+  71   3                  break;
+  72   3              case 0x09:
+  73   3                  beep = ~beep;
+  74   3                  break;
+  75   3              case 0x10:
+  76   3                  ENbz = 0;
+  77   3                  oled_cover_square(STATUS2, 1, emp);
+  78   3                  break;
+  79   3              case 0x11:
+  80   3                  ENbz = 1;
+  81   3                  oled_cover_square(STATUS2, 1, bizhang);
+  82   3                  break;
+  83   3              case 0x12:
+  84   3                  ENxx = 0;
+  85   3                  oled_cover_square(STATUS1, 1, emp);
+  86   3                  break;
+  87   3              case 0x13:
+  88   3                  ENxx = 1;
+  89   3                  oled_cover_square(STATUS1, 1, xunxian);
+  90   3                  break;
+  91   3              case 0x14:
+  92   3                  atoGear = 0;
+  93   3                  oled_cover_square(STATUS4, 1, emp);
+  94   3                  break;
+  95   3              case 0x15:
+  96   3                  atoGear = 1;
+  97   3                  oled_cover_square(STATUS4, 1, atoG);
+  98   3                  break;
+  99   3              case 0x0a:
+ 100   3                  powerOff();
+ 101   3                  break;
+ 102   3              case 0x0b:
+ 103   3                  //启动
+ 104   3                  break;
+ 105   3              case 0x0c:
+ 106   3                  distance = getDistance();
+ 107   3                  SBUF = distance;
+ 108   3                  while (!TI)
+ 109   3                      ;
+ 110   3                  TI = 0;
+ 111   3                  break;
+ 112   3              case 'h':
+ 113   3                  distance = getDistance();
+ 114   3                  TI = 1;
+ 115   3                  printf("Distance:%d\n", distance);
+ 116   3                  while (!TI)
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         08/13/2020 16:51:28 PAGE 3   
+
+ 117   3                      ;
+ 118   3                  TI = 0;
+ 119   3                  break;
+ 120   3      
+ 121   3              default:
+ 122   3                  break;
+ 123   3              }
+ 124   2              while (!RI)
+ 125   2                  ;
+ 126   2              RI = 0;
+ 127   2          }
+ 128   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    468    ----
+   CONSTANT SIZE    =     13    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      4    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

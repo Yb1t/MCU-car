@@ -1,0 +1,78 @@
+C51 COMPILER V9.60.0.0   TOOLS                                                             08/13/2020 16:51:27 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE TOOLS
+OBJECT MODULE PLACED IN .\Objects\tools.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE tools.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\too
+                    -ls.lst) OBJECT(.\Objects\tools.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          
+   3          //延时ms
+   4          void delayms(uint ms)
+   5          {
+   6   1          uint j;
+   7   1          while (ms > 0)
+   8   1          {
+   9   2              for (j = 110; j > 0; j--)
+  10   2                  ; //for里面什么也不做，仅不断减1，一次114~0循环用时约1s
+  11   2              ms--;
+  12   2          }
+  13   1      }
+  14          
+  15          //延时20us
+  16          void delay20us()
+  17          { //晶振频率11.0592，一个周期1.085us，20个周期稍微比20us大
+  18   1          _nop_();
+  19   1          _nop_();
+  20   1          _nop_();
+  21   1          _nop_();
+  22   1          _nop_();
+  23   1          _nop_();
+  24   1          _nop_();
+  25   1          _nop_();
+  26   1          _nop_();
+  27   1          _nop_();
+  28   1          _nop_();
+  29   1          _nop_();
+  30   1          _nop_();
+  31   1          _nop_();
+  32   1          _nop_();
+  33   1          _nop_();
+  34   1          _nop_();
+  35   1          _nop_();
+  36   1          _nop_();
+  37   1          _nop_();
+  38   1      }
+  39          
+  40          //清除数码管
+  41          void clean()
+  42          {
+  43   1          a = b = c = d = e = f = g = 1;
+  44   1      }
+  45          
+  46          //蜂鸣器
+  47          void fmq(uint ms)
+  48          {
+  49   1          beep = ~beep;
+  50   1          delayms(ms);
+  51   1          beep = ~beep;
+  52   1      }
+
+
+C51 COMPILER V9.60.0.0   TOOLS                                                             08/13/2020 16:51:27 PAGE 2   
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     74    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -1,0 +1,69 @@
+C51 COMPILER V9.60.0.0   ULTRASOUND                                                        08/13/2020 16:51:29 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE ULTRASOUND
+OBJECT MODULE PLACED IN .\Objects\ultrasound.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ultrasound.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listing
+                    -s\ultrasound.lst) OBJECT(.\Objects\ultrasound.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          
+   3          uint sendTime;     //发送时间
+   4          uint receiveTime;  //接收时间
+   5          uint distance = 0; //距离
+   6          
+   7          //获取定时器2计时
+   8          uint getTime()
+   9          {
+  10   1          uint time, timeTH2, timeTL2;
+  11   1          timeTH2 = TH2;
+  12   1          timeTL2 = TL2;
+  13   1          timeTH2 <<= 8; //左移8位
+  14   1          time = timeTH2 | timeTL2;
+  15   1          return time;
+  16   1      }
+  17          
+  18          //获取距离
+  19          uint getDistance()
+  20          {
+  21   1      
+  22   1          //控制端发送20us高电平
+  23   1          TRIG = 1;
+  24   1          delay20us();
+  25   1          TRIG = 0;
+  26   1      
+  27   1          //等待接收端出现高电平
+  28   1          while (!ECHO)
+  29   1              ;
+  30   1          //开始计时
+  31   1          sendTime = getTime();
+  32   1      
+  33   1          //计时结束
+  34   1          while (ECHO)
+  35   1              ;
+  36   1          receiveTime = getTime();
+  37   1      
+  38   1          
+  39   1          return (receiveTime - sendTime) /59;
+  40   1          //  Y m = （X s * 340） /2
+  41   1          //  Y cm=(X us * 340*10^-6 m/us) / 2 * 100
+  42   1          //  Y cm=X us * 0.017~=X/59
+  43   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     54    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =      6    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+C51 COMPILER V9.60.0.0   ULTRASOUND                                                        08/13/2020 16:51:29 PAGE 2   
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

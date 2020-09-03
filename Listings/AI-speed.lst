@@ -1,0 +1,108 @@
+C51 COMPILER V9.60.0.0   AI_SPEED                                                          08/13/2020 17:04:40 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE AI_SPEED
+OBJECT MODULE PLACED IN .\Objects\AI-speed.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE AI-speed.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -AI-speed.lst) OBJECT(.\Objects\AI-speed.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          uint count2 = 0;    //计时器2计数
+   3          uint line = 0;      //碰线计数
+   4          uint gear = 0;      //挡位
+   5          uint zkb1Gear = 50; //1档占空比
+   6          uint level;         //1档后占空比分级
+   7          bit atoDrive = 0;   //自动驾驶开关
+   8          bit atoGear = 0;    //自动档开关
+   9          
+  10          //AI挂挡定时器初始化（使用定时器2）
+  11          void Timer2Init()
+  12          {
+  13   1          //    T2CON = 0x00;//开机默认为0
+  14   1      
+  15   1          //初值50ms,50000/1.085~=46083,65536-46083=19453
+  16   1          TH2 = 0x4b;
+  17   1          TL2 = 0xfd;
+  18   1      
+  19   1          EA = 1;
+  20   1          ET2 = 1;
+  21   1          TR2 = 1;
+  22   1      }
+  23          
+  24          //定时器2进入中断
+  25          void Time2Config() interrupt 5
+  26          {
+  27   1          TF2 = 0; //定时器2需要软件复位溢出位
+  28   1      
+  29   1          //执行自动档识别切换
+  30   1          if (atoGear)
+  31   1          {
+  32   2              count2++;
+  33   2      
+  34   2              //每50ms
+  35   2              //碰线计数
+  36   2              if (xxZ == 1 || xxY == 1)
+  37   2              {
+  38   3                  line = 15;
+  39   3              }
+  40   2              else if (xxZ == 0 && xxY == 0 && line > 0)
+  41   2              {
+  42   3                  line--;
+  43   3              }
+  44   2      
+  45   2              //每1s(50ms*20)
+  46   2              if (count2 >= 20)
+  47   2              {
+  48   3                  //刷新距离
+  49   3                  distance = getDistance();
+  50   3                  //减1档
+  51   3                  if (gear > 1 && (line > 0 || distance < 200))
+  52   3                  {
+  53   4                      gearSwitch(gear - 1);
+  54   4                  }
+C51 COMPILER V9.60.0.0   AI_SPEED                                                          08/13/2020 17:04:40 PAGE 2   
+
+  55   3                  //加1档
+  56   3                  else if (line == 0 && distance > 200)
+  57   3                  {
+  58   4                      gearSwitch(gear + 1);
+  59   4                  }
+  60   3                  count2 = 0;
+  61   3              }
+  62   2          }
+  63   1      }
+  64          
+  65          //挂档
+  66          void gearSwitch(uint signal)
+  67          {
+  68   1          if (signal >= 0 && signal <= 5)
+  69   1          {
+  70   2              if (signal == 0)
+  71   2              {
+  72   3                  zkbZ = zkbY = 0;
+  73   3              }
+  74   2              else
+  75   2              {
+  76   3                  zkbZ = zkb1Gear + level * (signal - 1);
+  77   3                  zkbY = zkbZ - correct;
+  78   3              }
+  79   2              gear = signal;
+  80   2              gearShowRefresh();
+  81   2          }
+  82   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =    300    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =     10    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =      2    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
