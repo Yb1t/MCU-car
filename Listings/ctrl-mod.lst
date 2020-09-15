@@ -1,0 +1,44 @@
+C51 COMPILER V9.60.0.0   CTRL_MOD                                                          08/02/2020 00:05:52 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE CTRL_MOD
+OBJECT MODULE PLACED IN .\Objects\ctrl-mod.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ctrl-mod.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\
+                    -ctrl-mod.lst) OBJECT(.\Objects\ctrl-mod.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          
+   3          //控制模式切换
+   4          //0x05手动 0x06自动
+   5          void ctrlModSwitch(uint mod)
+   6          {
+   7   1          switch (mod)
+   8   1          {
+   9   2          case 0x05://手动
+  10   2              blutoothInit();  //通讯串口初始化配置（使用计数器1）
+  11   2      
+  12   2              break;
+  13   2          case 0x06://自动
+  14   2              speedTimerInit(); //AI挂挡定时器初始化（使用计数器1）
+  15   2      
+  16   2              break;
+  17   2          default:
+  18   2              break;
+  19   2          }
+  20   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     18    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

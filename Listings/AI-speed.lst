@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   AI_SPEED                                                          08/13/2020 17:04:40 PAGE 1   
+C51 COMPILER V9.60.0.0   AI_SPEED                                                          09/15/2020 14:06:38 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE AI_SPEED
@@ -12,7 +12,7 @@ line level    source
    2          uint count2 = 0;    //计时器2计数
    3          uint line = 0;      //碰线计数
    4          uint gear = 0;      //挡位
-   5          uint zkb1Gear = 50; //1档占空比
+   5          uint zkb1Gear = 25; //1档占空比
    6          uint level;         //1档后占空比分级
    7          bit atoDrive = 0;   //自动驾驶开关
    8          bit atoGear = 0;    //自动档开关
@@ -58,14 +58,14 @@ line level    source
   48   3                  //刷新距离
   49   3                  distance = getDistance();
   50   3                  //减1档
-  51   3                  if (gear > 1 && (line > 0 || distance < 200))
+  51   3                  if (gear > 1 && (line > 0 || distance < 100))
   52   3                  {
   53   4                      gearSwitch(gear - 1);
   54   4                  }
-C51 COMPILER V9.60.0.0   AI_SPEED                                                          08/13/2020 17:04:40 PAGE 2   
+C51 COMPILER V9.60.0.0   AI_SPEED                                                          09/15/2020 14:06:38 PAGE 2   
 
   55   3                  //加1档
-  56   3                  else if (line == 0 && distance > 200)
+  56   3                  else if (line == 0 && distance > 100)
   57   3                  {
   58   4                      gearSwitch(gear + 1);
   59   4                  }
@@ -81,12 +81,12 @@ line level    source
   69   1          {
   70   2              if (signal == 0)
   71   2              {
-  72   3                  zkbZ = zkbY = 0;
+  72   3                  zkbY = zkbZ =  0;
   73   3              }
   74   2              else
   75   2              {
-  76   3                  zkbZ = zkb1Gear + level * (signal - 1);
-  77   3                  zkbY = zkbZ - correct;
+  76   3                  zkbY = zkb1Gear + level * (signal - 1);
+  77   3                  zkbZ = zkbY - correct;
   78   3              }
   79   2              gear = signal;
   80   2              gearShowRefresh();

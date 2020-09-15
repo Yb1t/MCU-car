@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   BLUETOOTH                                                         08/13/2020 16:51:28 PAGE 1   
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         09/15/2020 14:06:38 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE BLUETOOTH
@@ -35,116 +35,117 @@ line level    source
   25          void UART() interrupt 4
   26          {
   27   1      
-  28   1          //  count3++;
-  29   1          //  if(count3==10000&&TI)
-  30   1          //  {
-  31   1          //          count3=0;
-  32   1          //          SBUF=distance;
-  33   1          //      while(!TI);
-  34   1          //          TI=0;
-  35   1          //  }
-  36   1      
-  37   1          if (RI)
-  38   1          {
-  39   2              key = SBUF;
-  40   2              switch (key)
-  41   2              {
-  42   3              case 0x00:
-  43   3                  forward();
+  28   1          if (RI)
+  29   1          {
+  30   2              key = SBUF;
+  31   2              switch (key)
+  32   2              {
+  33   3              case 0x00:
+  34   3                  forward();
+  35   3                  break;
+  36   3              case 0x01:
+  37   3                  back();
+  38   3                  break;
+  39   3              case 0x02:
+  40   3                  left();
+  41   3                  break;
+  42   3              case 0x03:
+  43   3                  right();
   44   3                  break;
-  45   3              case 0x01:
-  46   3                  back();
+  45   3              case 0x04:
+  46   3                  stop();
   47   3                  break;
-  48   3              case 0x02:
-  49   3                  left();
-  50   3                  break;
-  51   3              case 0x03:
-  52   3                  right();
-  53   3                  break;
-  54   3              case 0x04:
-C51 COMPILER V9.60.0.0   BLUETOOTH                                                         08/13/2020 16:51:28 PAGE 2   
+  48   3              case 0x05:
+  49   3                  atoDrive = 0; //进入手动驾驶
+  50   3                  oled_cover_square(STATUS3, 1, emp);
+  51   3                  stop();
+  52   3                  break;
+  53   3              case 0x06:
+  54   3                  atoDrive = 1; //进入自动驾驶
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         09/15/2020 14:06:38 PAGE 2   
 
-  55   3                  stop();
+  55   3                  oled_cover_square(STATUS3, 1, atoD);
   56   3                  break;
-  57   3              case 0x05:
-  58   3                  atoDrive = 0; //进入手动驾驶
-  59   3                  oled_cover_square(STATUS3, 1, emp);
-  60   3                  stop();
-  61   3                  break;
-  62   3              case 0x06:
-  63   3                  atoDrive = 1; //进入自动驾驶
-  64   3                  oled_cover_square(STATUS3, 1, atoD);
+  57   3              case 0x07:
+  58   3                  gearSwitch(gear + 1);
+  59   3                  break;
+  60   3              case 0x08:
+  61   3                  gearSwitch(gear - 1);
+  62   3                  break;
+  63   3              case 0x09:
+  64   3                  beep = ~beep;
   65   3                  break;
-  66   3              case 0x07:
-  67   3                  gearSwitch(gear + 1);
-  68   3                  break;
-  69   3              case 0x08:
-  70   3                  gearSwitch(gear - 1);
-  71   3                  break;
-  72   3              case 0x09:
-  73   3                  beep = ~beep;
-  74   3                  break;
-  75   3              case 0x10:
-  76   3                  ENbz = 0;
-  77   3                  oled_cover_square(STATUS2, 1, emp);
-  78   3                  break;
-  79   3              case 0x11:
-  80   3                  ENbz = 1;
-  81   3                  oled_cover_square(STATUS2, 1, bizhang);
-  82   3                  break;
-  83   3              case 0x12:
-  84   3                  ENxx = 0;
-  85   3                  oled_cover_square(STATUS1, 1, emp);
-  86   3                  break;
-  87   3              case 0x13:
-  88   3                  ENxx = 1;
-  89   3                  oled_cover_square(STATUS1, 1, xunxian);
-  90   3                  break;
-  91   3              case 0x14:
-  92   3                  atoGear = 0;
-  93   3                  oled_cover_square(STATUS4, 1, emp);
-  94   3                  break;
-  95   3              case 0x15:
-  96   3                  atoGear = 1;
-  97   3                  oled_cover_square(STATUS4, 1, atoG);
-  98   3                  break;
-  99   3              case 0x0a:
- 100   3                  powerOff();
- 101   3                  break;
- 102   3              case 0x0b:
- 103   3                  //启动
- 104   3                  break;
- 105   3              case 0x0c:
- 106   3                  distance = getDistance();
- 107   3                  SBUF = distance;
- 108   3                  while (!TI)
- 109   3                      ;
- 110   3                  TI = 0;
- 111   3                  break;
- 112   3              case 'h':
- 113   3                  distance = getDistance();
- 114   3                  TI = 1;
- 115   3                  printf("Distance:%d\n", distance);
- 116   3                  while (!TI)
-C51 COMPILER V9.60.0.0   BLUETOOTH                                                         08/13/2020 16:51:28 PAGE 3   
+  66   3              case 0x10:
+  67   3                  ENbz = 0;
+  68   3                  oled_cover_square(STATUS2, 1, emp);
+  69   3                  break;
+  70   3              case 0x11:
+  71   3                  ENbz = 1;
+  72   3                  oled_cover_square(STATUS2, 1, bizhang);
+  73   3                  break;
+  74   3              case 0x12:
+  75   3                  ENxx = 0;
+  76   3                  oled_cover_square(STATUS1, 1, emp);
+  77   3                  break;
+  78   3              case 0x13:
+  79   3                  ENxx = 1;
+  80   3                  oled_cover_square(STATUS1, 1, xunxian);
+  81   3                  break;
+  82   3              case 0x14:
+  83   3                  atoGear = 0;
+  84   3                  oled_cover_square(STATUS4, 1, emp);
+  85   3                  break;
+  86   3              case 0x15:
+  87   3                  atoGear = 1;
+  88   3                  oled_cover_square(STATUS4, 1, atoG);
+  89   3                  break;
+  90   3              case 0x0a:
+  91   3                  powerOff();
+  92   3                  break;
+  93   3              case 0x0b:
+  94   3                  //启动
+  95   3                  break;
+  96   3              case 0x0c:
+  97   3                  distance = getDistance();
+  98   3                  TI = 1;
+  99   3                  printf("Distance:%dcm\n",distance);
+ 100   3                  while (!TI)
+ 101   3                      ;
+ 102   3                  TI = 0;
+ 103   3                  break;
+ 104   3              case 0x0d:
+ 105   3                  if (angle < 25)
+ 106   3                  {
+ 107   4                      angle += 5;
+ 108   4                  }
+ 109   3                  break;
+ 110   3              case 0x0e:
+ 111   3                  if (angle > 5)
+ 112   3                  {
+ 113   4                      angle -= 5;
+ 114   4                  }
+ 115   3                  break;
+ 116   3              case 0x0f:
+C51 COMPILER V9.60.0.0   BLUETOOTH                                                         09/15/2020 14:06:38 PAGE 3   
 
- 117   3                      ;
- 118   3                  TI = 0;
- 119   3                  break;
- 120   3      
- 121   3              default:
- 122   3                  break;
- 123   3              }
- 124   2              while (!RI)
- 125   2                  ;
- 126   2              RI = 0;
- 127   2          }
- 128   1      }
+ 117   3                  showAD();
+ 118   3                  break;
+ 119   3              case 0x1a:
+ 120   3                  turn_off_AD();
+ 121   3                  break;
+ 122   3              default:
+ 123   3                  break;
+ 124   3              }
+ 125   2              while (!RI)
+ 126   2                  ;
+ 127   2              RI = 0;
+ 128   2          }
+ 129   1      }
 
 
 MODULE INFORMATION:   STATIC OVERLAYABLE
-   CODE SIZE        =    468    ----
-   CONSTANT SIZE    =     13    ----
+   CODE SIZE        =    512    ----
+   CONSTANT SIZE    =     15    ----
    XDATA SIZE       =   ----    ----
    PDATA SIZE       =   ----    ----
    DATA SIZE        =      4    ----

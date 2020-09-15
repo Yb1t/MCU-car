@@ -1,0 +1,51 @@
+C51 COMPILER V9.60.0.0   COUNTDOWN                                                         07/30/2020 16:26:39 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE COUNTDOWN
+OBJECT MODULE PLACED IN .\Objects\countDown.obj
+COMPILER INVOKED BY: d:\Keil_v5\C51\BIN\C51.EXE countDown.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings
+                    -\countDown.lst) TABS(3) OBJECT(.\Objects\countDown.obj)
+
+line level    source
+
+   1          #include "head.h"
+   2          
+   3          //µ¹¼ÆÊ±3s
+   4          void countDown()
+   5          {
+   6   1          //3
+   7   1         a=b=c=d=g=0;
+   8   1         delay(1000);
+   9   1          clean();
+  10   1      
+  11   1         //2
+  12   1         a=b=d=e=g=0;
+  13   1         delay(1000);
+  14   1          clean();
+  15   1      
+  16   1         //1
+  17   1         b=c=0;
+  18   1         delay(1000);
+  19   1          clean();
+  20   1         
+  21   1         //0
+  22   1         a=b=c=d=e=f=0;
+  23   1          g=1;
+  24   1          delay(1000);
+  25   1          clean();
+  26   1      
+  27   1      }
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =     78    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

@@ -2,15 +2,15 @@
 
 void oled_show_sign()
 {
-	oled_clear();
-	
-	oled_cover_square(32,0,4,bigBenz);
+    oled_clear();
+
+    oled_cover_square(32, 0, 4, bigBenz);
 }
 
 void oled_show_index()
 {
-	oled_clear();
-	
+    oled_clear();
+
     // oled_cover_square(STATUS1, 1, xunxian);
     // oled_cover_square(STATUS2, 1, bizhang);
     // oled_cover_square(STATUS3, 1, atoD);
@@ -48,7 +48,7 @@ void I2C_stop()
 void I2C_send_byte(uchar dat)
 {
     uchar a = 0, b = 0;
-    for (a = 0; a < 8; a++)//要发送8位，从最高位开始
+    for (a = 0; a < 8; a++) //要发送8位，从最高位开始
     {
         dat <<= 1;
         SDA = CY; //起始信号之后SCL=0，所以可以直接改变SDA信号
@@ -123,12 +123,13 @@ void oled_cover_square(uchar x0, uchar yPage0, uchar size, uchar BMP[])
     }
 }
 
-
 // 初始化oled
 void oledInit()
 {
     //关闭显示
     oled_send_cmd(0xae); //--turn off oled panel
+    //关闭滚动
+    oled_send_cmd(0x2E); 
     //设置起始列
     oled_send_cmd(0x00); //---set low column address设置起始列的低四位 0x0x
     oled_send_cmd(0x10); //---set high column address设置起始列的高四位0x1x
@@ -173,4 +174,50 @@ void oledInit()
     oled_send_cmd(0xaf); //--turn on oled panel
 
     oled_clear(); //清屏
+}
+
+void showAD()
+{
+    char i;
+
+    oled_send_cmd(0x2E); //关闭滚动
+
+    //清除底下一列
+    for ( i = 0; i < 128/16; i++)
+    {
+    oled_cover_square(16*i, 6, 1, emp);
+    }
+
+    oled_cover_square(32 - 8, 6, 1, guang);
+    oled_cover_square(48 - 8, 6, 1, gao);
+    oled_cover_square(64 - 8, 6, 1, wei);
+    oled_cover_square(80 - 8, 6, 1, zhao);
+    oled_cover_square(96 - 8, 6, 1, zu);
+
+    oled_send_cmd(0x2A); //滚动命令
+    oled_send_cmd(0x00); //A空字节
+    oled_send_cmd(0x06); //B起始页 6
+    oled_send_cmd(0x07); //C帧率范围内设置每次滚屏的时间间隔
+    oled_send_cmd(0x07); //D终止页 7
+    oled_send_cmd(0x00); //E每次垂直滚动位移
+
+    oled_send_cmd(0x2F); //开启滚动
+}
+
+void turn_off_AD()
+{
+    char i;
+    
+    oled_send_cmd(0x2E); //关闭滚动
+    //清除底下一列
+    for ( i = 0; i < 128/16; i++)
+    {
+    oled_cover_square(16*i, 6, 1, emp);
+    }
+
+    oled_cover_square(32 - 8, 6, 1, zen);
+    oled_cover_square(48 - 8, 6, 1, me);
+    oled_cover_square(64 - 8, 6, 1, zuo);
+    oled_cover_square(80 - 8, 6, 1, dou);
+    oled_cover_square(96 - 8, 6, 1, dui);
 }

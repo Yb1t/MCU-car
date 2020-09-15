@@ -2,7 +2,7 @@
 uint count2 = 0;    //计时器2计数
 uint line = 0;      //碰线计数
 uint gear = 0;      //挡位
-uint zkb1Gear = 50; //1档占空比
+uint zkb1Gear = 25; //1档占空比
 uint level;         //1档后占空比分级
 bit atoDrive = 0;   //自动驾驶开关
 bit atoGear = 0;    //自动档开关
@@ -48,12 +48,12 @@ void Time2Config() interrupt 5
             //刷新距离
             distance = getDistance();
             //减1档
-            if (gear > 1 && (line > 0 || distance < 200))
+            if (gear > 1 && (line > 0 || distance < 100))
             {
                 gearSwitch(gear - 1);
             }
             //加1档
-            else if (line == 0 && distance > 200)
+            else if (line == 0 && distance > 100)
             {
                 gearSwitch(gear + 1);
             }
@@ -69,12 +69,12 @@ void gearSwitch(uint signal)
     {
         if (signal == 0)
         {
-            zkbZ = zkbY = 0;
+            zkbY = zkbZ =  0;
         }
         else
         {
-            zkbZ = zkb1Gear + level * (signal - 1);
-            zkbY = zkbZ - correct;
+            zkbY = zkb1Gear + level * (signal - 1);
+            zkbZ = zkbY - correct;
         }
         gear = signal;
         gearShowRefresh();

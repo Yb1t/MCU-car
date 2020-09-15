@@ -1,13 +1,13 @@
-#ifndef __character_h__ //防止重复定义
+#ifndef __character_h__ 
 #define __character_h__
 
 
 extern uchar code emp[];
-extern uchar code font1[];
-extern uchar code font2[];
-extern uchar code font3[];
-extern uchar code font4[];
-extern uchar code font5[];
+extern uchar code guang[];
+extern uchar code gao[];
+extern uchar code wei[];
+extern uchar code zhao[];
+extern uchar code zu[];
 extern uchar code bluetooth[];
 extern uchar code bizhang[];
 extern uchar code xunxian[];

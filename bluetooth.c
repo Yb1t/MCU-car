@@ -25,15 +25,6 @@ void bluetoothInit()
 void UART() interrupt 4
 {
 
-    //	count3++;
-    //	if(count3==10000&&TI)
-    //	{
-    //		count3=0;
-    //		SBUF=distance;
-    //      while(!TI);
-    //		TI=0;
-    //	}
-
     if (RI)
     {
         key = SBUF;
@@ -104,20 +95,30 @@ void UART() interrupt 4
             break;
         case 0x0c:
             distance = getDistance();
-            SBUF = distance;
-            while (!TI)
-                ;
-            TI = 0;
-            break;
-        case 'h':
-            distance = getDistance();
             TI = 1;
-            printf("Distance:%d\n", distance);
+            printf("Distance:%dcm\n",distance);
             while (!TI)
                 ;
             TI = 0;
             break;
-
+        case 0x0d:
+            if (angle < 25)
+            {
+                angle += 5;
+            }
+            break;
+        case 0x0e:
+            if (angle > 5)
+            {
+                angle -= 5;
+            }
+            break;
+        case 0x0f:
+            showAD();
+            break;
+        case 0x1a:
+            turn_off_AD();
+            break;
         default:
             break;
         }
