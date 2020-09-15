@@ -65,6 +65,12 @@ void pwmInit0();      //计时器0初始化
 void Time0Config();   //计时器0配置
 void motoControl();   //电机使能控制
 
+//舵机
+extern uint djCount;      //舵机pwm
+sbit dj=P2^6;  //舵机电平
+extern uint angle;//舵机角度
+
+
 //定时器2
 extern uint count2; //定时器2计数
 extern uint line;   //碰线计数
@@ -94,6 +100,7 @@ sbit press=P3^2;
 sfr ISP_CONTR = 0xe7;
 void boot();
 void powerOff();
+void press_detect();
 
 //超声波
 sbit TRIG = P2 ^ 0; //超声波控制端
@@ -121,6 +128,8 @@ void delay(uchar i);
 void oled_setpos(uchar x, uchar y);
 void oled_cover_square(uchar x0, uchar y0, uchar size, uchar BMP[]);
 void oled_show_sign();
+void showAD();
+void turn_off_AD();
 
 
 #endif

@@ -1,0 +1,24 @@
+C51 COMPILER V9.60.0.0   CTRLMOD                                                           07/31/2020 18:54:41 PAGE 1   
+
+
+C51 COMPILER V9.60.0.0, COMPILATION OF MODULE CTRLMOD
+OBJECT MODULE PLACED IN .\Objects\ctrlMod.obj
+COMPILER INVOKED BY: C:\Keil_v5\C51\BIN\C51.EXE ctrlMod.c OPTIMIZE(8,SPEED) BROWSE DEBUG OBJECTEXTEND PRINT(.\Listings\c
+                    -trlMod.lst) OBJECT(.\Objects\ctrlMod.obj)
+
+line level    source
+
+
+
+MODULE INFORMATION:   STATIC OVERLAYABLE
+   CODE SIZE        =   ----    ----
+   CONSTANT SIZE    =   ----    ----
+   XDATA SIZE       =   ----    ----
+   PDATA SIZE       =   ----    ----
+   DATA SIZE        =   ----    ----
+   IDATA SIZE       =   ----    ----
+   BIT SIZE         =   ----    ----
+END OF MODULE INFORMATION.
+
+
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)

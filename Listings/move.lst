@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MOVE                                                              08/13/2020 16:51:27 PAGE 1   
+C51 COMPILER V9.60.0.0   MOVE                                                              09/15/2020 14:06:37 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MOVE
@@ -62,7 +62,7 @@ line level    source
   52   6                              forward();
   53   6                          }
   54   5                          //左黑
-C51 COMPILER V9.60.0.0   MOVE                                                              08/13/2020 16:51:27 PAGE 2   
+C51 COMPILER V9.60.0.0   MOVE                                                              09/15/2020 14:06:37 PAGE 2   
 
   55   5                          else if (xxZ == 1 && xxY == 0)
   56   5                          {
@@ -126,7 +126,7 @@ line level    source
  114   1          R2 = 0;
  115   1      }
  116          
-C51 COMPILER V9.60.0.0   MOVE                                                              08/13/2020 16:51:27 PAGE 3   
+C51 COMPILER V9.60.0.0   MOVE                                                              09/15/2020 14:06:37 PAGE 3   
 
  117          //停止
  118          void stop()

@@ -1,4 +1,4 @@
-C51 COMPILER V9.60.0.0   MAIN                                                              08/13/2020 16:51:27 PAGE 1   
+C51 COMPILER V9.60.0.0   MAIN                                                              09/15/2020 14:06:37 PAGE 1   
 
 
 C51 COMPILER V9.60.0.0, COMPILATION OF MODULE MAIN
@@ -21,7 +21,6 @@ line level    source
   11   2                      motoControl();
   12   2                      route();
   13   2                      press_detect();
-*** WARNING C206 IN LINE 13 OF main.c: 'press_detect': missing function-prototype
   14   2              }
   15   1      }
 
@@ -37,4 +36,4 @@ MODULE INFORMATION:   STATIC OVERLAYABLE
 END OF MODULE INFORMATION.
 
 
-C51 COMPILATION COMPLETE.  1 WARNING(S),  0 ERROR(S)
+C51 COMPILATION COMPLETE.  0 WARNING(S),  0 ERROR(S)
