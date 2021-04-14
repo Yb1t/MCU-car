@@ -13,3 +13,4 @@ keil的C语言代码
 > 手动-自动切换  
 > 档位显示  
 > 舵机  
+演示视频：https://www.bilibili.com/video/BV1UK4y1a7Tz/
